@@ -8,8 +8,311 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css">
-    
+    <style>
+        /* ================================================= */
+        /* == ЦВЕТОВЫЕ ПЕРЕМЕННЫЕ (СВЕТЛАЯ ТЕМА ПО УМОЛЧАНИЮ) == */
+        /* ================================================= */
+        :root {
+            --bg-main: #e0f2f7;
+            --bg-container: #ffffff;
+            --text-color: #2c3e50;
+            --primary-color: #3f729b;
+            --secondary-color: #d1e1f1;
+            --accent-color: #ffbe0b;
+            --warning-color: #e74c3c;
+            --warning-bg: #fce7e7;
+            --feature-bg: linear-gradient(45deg, #e8f5fd, #e0eff7);
+            --shadow-light: rgba(0, 0, 0, 0.05) 0px 5px 15px;
+            --shadow-medium: rgba(0, 0, 0, 0.1) 0px 10px 30px;
+            --border-radius: 12px;
+        }
+
+        /* ================================================= */
+        /* == ТЕМНАЯ ТЕМА == */
+        /* ================================================= */
+        body.dark-mode {
+            --bg-main: #2c3e50;
+            --bg-container: #34495e;
+            --text-color: #ecf0f1;
+            --primary-color: #a0d4ff; 
+            --secondary-color: #4a637c;
+            --accent-color: #ffd460;
+            --warning-color: #ff7f7f;
+            --warning-bg: #5f2f2f;
+            --feature-bg: linear-gradient(45deg, #42586e, #3a4f63);
+            
+            background: linear-gradient(135deg, var(--bg-main), #3a4f63) !important;
+        }
+
+        /* Общие стили */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--bg-main), #c7e9f3);
+            color: var(--text-color);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.5s ease;
+        }
+        .container {
+            max-width: 960px;
+            width: 95%;
+            margin: 40px auto;
+            padding: 30px;
+            background: var(--bg-container);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium);
+            animation: fadeIn 1s ease-out;
+            transition: background-color 0.5s ease;
+            position: relative;
+        }
+        
+        /* ... Стили для header, h1, h2, footer, download-button остаются прежними, используя переменные ... */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid var(--secondary-color);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            font-size: 3em;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        header h1::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            color: var(--text-color);
+            font-weight: 300;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2 i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: var(--accent-color);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            border-radius: 2px;
+        }
+
+        .warning-box {
+            background-color: var(--warning-bg);
+            border: 2px solid var(--warning-color);
+            color: var(--warning-color);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: var(--border-radius);
+            font-size: 1.15em;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            line-height: 1.5;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .warning-box h3 {
+            margin-top: 0;
+            color: var(--warning-color);
+            font-size: 1.6em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .warning-box i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .feature-list li {
+            background: var(--feature-bg);
+            padding: 20px;
+            border-left: 6px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        .feature-list li strong {
+            color: var(--primary-color);
+        }
+
+        .feature-list li:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-list li i {
+            font-size: 1.8em;
+            margin-right: 15px;
+            color: var(--primary-color);
+        }
+
+        .download-button {
+            display: block;
+            width: 70%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 18px 35px;
+            background: linear-gradient(45deg, var(--primary-color), #2d5e82);
+            color: var(--light-text-color);
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.4em;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #2d5e82, var(--primary-color));
+        }
+
+        .code-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+        .code-table th, .code-table td {
+            padding: 15px;
+            text-align: left;
+        }
+        .code-table th {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .code-table tr:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+        .code-table td {
+            border-bottom: 1px solid #eee;
+            color: var(--dark-text-color);
+        }
+        .code-table code {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        body.dark-mode .code-table code {
+             color: var(--accent-color);
+        }
+        
+        /* Стили для таблицы терминологии */
+        .terminology-table {
+            border: 1px solid #ddd;
+            width: 100%;
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+        .terminology-table th, .terminology-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .terminology-table th {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+        }
+        body.dark-mode .terminology-table td {
+            color: var(--text-color);
+            background-color: #4a637c;
+        }
+        body.dark-mode .terminology-table tr:nth-child(odd) td {
+            background-color: #34495e;
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: var(--text-color);
+        }
+        
+        /* Стили для переключателя темы */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary-color);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: var(--shadow-light);
+            color: var(--primary-color);
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            z-index: 10;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        body.dark-mode .theme-toggle {
+            background: var(--secondary-color);
+            color: var(--accent-color);
+        }
+        body.dark-mode .theme-toggle:hover {
+            background: #5a7590;
+        }
+        
+    </style>
 </head>
 <body class="light-mode">
 
@@ -138,8 +441,9 @@
         const savedTheme = localStorage.getItem(localStorageKey);
         if (savedTheme === 'dark') {
             body.classList.add('dark-mode');
-            toggle.innerHTML = '<i class="fas fa-sun"></i>';
+            toggle.innerHTML = '<i class="fas fa-sun"></i>'; // Иконка Солнца для переключения на светлую тему
         } else {
+            // Устанавливаем иконку Луны по умолчанию, если нет сохраненной темы (или она 'light')
             toggle.innerHTML = '<i class="fas fa-moon"></i>'; 
         }
 
